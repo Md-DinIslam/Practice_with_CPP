@@ -1,0 +1,28 @@
+<snippet>
+	<content><![CDATA[
+// KMP
+vll prefix(string &p){
+	ll mxN = p.size();
+	vll ans(mxN,0);
+	while(i < p.size()){
+		if(p[i] == p[j]){
+			j++;
+			ans[i] = j;
+			i++;
+		}
+		else if(j > 0){
+			j = ans[j-1];
+		}
+		else{
+			ans[i] = 0;
+			i++;
+		}
+	}
+	return ans;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>KMP CP</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

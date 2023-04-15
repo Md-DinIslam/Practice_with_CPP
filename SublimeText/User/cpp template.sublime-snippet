@@ -21,7 +21,7 @@ using ull = unsigned long long;
 
 // Constants
 const lld PI = 3.141592653589793238;
-const ll INF = LONG_LONG_MAX;
+const ll INF = 1e18+9;
 const ll mod = 1e9 + 7;
 
 // TypeDEf
@@ -50,14 +50,33 @@ typedef map<ll, ll> mll;
 #define all(v) v.begin(), v.end()
 #define rall(v) v.end(), v.begin()
 
-// Debug
-#ifdef ONLINE_JUDGE
-#define debug(x)       \
-    cerr << #x << " "; \
-    cerr << x << " ";  \
-    cerr << endl;
+//DEBUG
+
+void __print(int x) {cerr << x;}
+void __print(long x) {cerr << x;}
+void __print(long long x) {cerr << x;}
+void __print(unsigned x) {cerr << x;}
+void __print(unsigned long x) {cerr << x;}
+void __print(unsigned long long x) {cerr << x;}
+void __print(float x) {cerr << x;}
+void __print(double x) {cerr << x;}
+void __print(long double x) {cerr << x;}
+void __print(char x) {cerr << '\'' << x << '\'';}
+void __print(const char *x) {cerr << '\"' << x << '\"';}
+void __print(const string &x) {cerr << '\"' << x << '\"';}
+void __print(bool x) {cerr << (x ? "true" : "false");}
+
+template<typename T, typename V>
+void __print(const pair<T, V> &x) {cerr << '{'; __print(x.first); cerr << ','; __print(x.second); cerr << '}';}
+template<typename T>
+void __print(const T &x) {int f = 0; cerr << '{'; for (auto &i: x) cerr << (f++ ? "," : ""), __print(i); cerr << "}";}
+void _print() {cerr << "]\n";}
+template <typename T, typename... V>
+void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v...);}
+#ifndef ONLINE_JUDGE
+#define debug(x...) cerr << "[" << #x << "] = ["; _print(x)
 #else
-#define debug(x) ;
+#define debug(x...)
 #endif
 
 // Operator overloads
@@ -237,7 +256,7 @@ int main()
     //     cout<<"Case #"<<i+1<<": ";
     //     solve(); nn
     // }
-    cerr<<"Run Time : "<<(((double)(clock() - z)) / CLOCKS_PER_SEC);
+    cerr<<"\nRun Time : "<<(((double)(clock() - z)) / CLOCKS_PER_SEC);
     return 0;
 }
 ]]></content>
