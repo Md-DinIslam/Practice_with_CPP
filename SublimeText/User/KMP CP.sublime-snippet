@@ -2,23 +2,16 @@
 	<content><![CDATA[
 // KMP
 vll prefix(string &p){
-	ll mxN = p.size();
-	vll ans(mxN,0);
-	while(i < p.size()){
-		if(p[i] == p[j]){
-			j++;
-			ans[i] = j;
-			i++;
-		}
-		else if(j > 0){
-			j = ans[j-1];
-		}
-		else{
-			ans[i] = 0;
-			i++;
-		}
-	}
-	return ans;
+    ll mxN = p.size();
+    vll ans(mxN,0);
+    int len = 0, i = 1;
+    while(i < mxN){
+        if (p[i] == p[len])
+            ++len, ans[i] = len, ++i;
+        else if(len == 0) ans[i] = 0, ++i;
+        else len = ans[len-1];
+    }
+    return ans;
 }
 ]]></content>
 	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
