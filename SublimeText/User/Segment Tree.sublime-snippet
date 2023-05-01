@@ -20,12 +20,12 @@ ll query(int s, int e, int l, int r, int rt) {
     ll b = query(mid + 1, e, l, r, 2 * rt + 1);
     return a + b;
 }
-void udpate(int s, int e, int indx, int val, int rt) {
+void update(int s, int e, int indx, int val, int rt) {
     if (s == e) ans[rt] = val;
     else {
         int mid = (s + e) >> 1;
-        if (indx <= mid) udpate(s, mid, indx, val, 2 * rt);
-        else udpate(mid + 1, e, indx, val, 2 * rt + 1);
+        if (indx <= mid) update(s, mid, indx, val, 2 * rt);
+        else update(mid + 1, e, indx, val, 2 * rt + 1);
         ans[rt] = ans[2 * rt] + ans[2 * rt + 1];
     }
 }]]></content>
