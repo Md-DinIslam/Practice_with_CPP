@@ -26,6 +26,7 @@ typedef map<ll, ll> mpll;
 #define ff first
 #define ss second
 #define pb push_back
+#define pp pop_back
 #define mp make_pair
 #define fl(i, n) for (int i = 0; i < n; i++)
 #define rfl(i, m, n) for (int i = n; i >= m; i--)
@@ -72,59 +73,46 @@ const lld PI = 3.141592653589793238;
 const ll INF = 1e18 + 9;
 const ll mod = 1e9 + 7;
 
-// int binExpoRecur(int a, int p) {
-//     if (p == 0) return 1;
-//     int result = binExpoRecur(a, p / 2);
-//     /* ODD Check */
-//     if (p & 1) return (a * (result * 1LL * result) % mod) % mod;
-//     /* Otherwise EVEN */
-//     else return (result * 1LL * result) % mod;
-// }
-
-ll binExRecu(ll a, ll b) {
-    if (!b) return 1;
-    ll ans = binExRecu(a, b / 2);
-    if (b & 1) return (a * (ans * ans) % mod) % mod;
-    else return (ans * ans) % mod;
-}
-ll binExpo(ll a, ll b) {
-    ll ans = 1;
-    while (b) {
-        if (b & 1) ans = (ans * a) % mod;
-        a = (a * a) % mod;
-        b >>= 1;
+vs ans;
+ll cnt = 0;
+void genbracket(string s,int n, int open, int close, int indx){
+    if(indx == 2*n){
+        cout<<s, nn;
+        return;
     }
-    return ans;
+    if(open < n) genbracket(s + '(', n, open+1,close, indx+1);
+    if(open > close) genbracket(s+ ')', n, open,close+1, indx+1);
 }
-
-ll binMul(ll a, ll b) {
-    ll ans = 0;
-    while (b) {
-        if (b & 1) ans = (ans + a) % mod;
-        a = (a + a) % mod;
-        // a = (a << 1) % mod;
-        b >>= 1;
+void generate(string &s, int open, int close) {
+    if (!open && !close) {
+        ans.pb(s);
+        cnt = (cnt + 1) % mod;
+        return;
     }
-    return ans;
-}
-
-ll binExMul(ll a, ll b) {
-    ll ans = 1;
-    while (b) {
-        if (b & 1) ans = binMul(ans, a);
-        a = binMul(a, a);
-        b >>= 1;
+    if (open > 0) {
+        s.pb('(');
+        generate(s, open - 1, close);
+        s.pp();
     }
-    return ans;
+    if (close > 0) {
+        if (open < close) {
+            s.pb(')');
+            generate(s, open, close - 1);
+            s.pp();
+        }
+    }
 }
-
 void solve()
 {
-    ll a, b;
-    cin >> a >> b;
-    cout << binExpo(a, b); nn
-    cout << binExMul(a, b);
-    // cout<<pow(a,b); nn
+    int n;
+    cin >> n;
+    string s;
+    generate(s, n, n);
+    for(auto &x : ans){
+        cout<<x, nn;
+    }
+    cout << cnt; nn;
+    genbracket(s,n,0,0,0);
 }
 // Main
 int main()
@@ -137,7 +125,7 @@ int main()
 #endif
     clock_t z = clock();
     // ll t; cin >> t;
-    // while (t--) solve();
+    // while(t--) solve();
     solve();
     // fl(i,t) //Kickstart
     // {

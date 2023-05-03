@@ -26,6 +26,7 @@ typedef map<ll, ll> mpll;
 #define ff first
 #define ss second
 #define pb push_back
+#define pp pop_back
 #define mp make_pair
 #define fl(i, n) for (int i = 0; i < n; i++)
 #define rfl(i, m, n) for (int i = n; i >= m; i--)
@@ -71,60 +72,38 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 const lld PI = 3.141592653589793238;
 const ll INF = 1e18 + 9;
 const ll mod = 1e9 + 7;
-
-// int binExpoRecur(int a, int p) {
-//     if (p == 0) return 1;
-//     int result = binExpoRecur(a, p / 2);
-//     /* ODD Check */
-//     if (p & 1) return (a * (result * 1LL * result) % mod) % mod;
-//     /* Otherwise EVEN */
-//     else return (result * 1LL * result) % mod;
-// }
-
-ll binExRecu(ll a, ll b) {
-    if (!b) return 1;
-    ll ans = binExRecu(a, b / 2);
-    if (b & 1) return (a * (ans * ans) % mod) % mod;
-    else return (ans * ans) % mod;
-}
-ll binExpo(ll a, ll b) {
-    ll ans = 1;
-    while (b) {
-        if (b & 1) ans = (ans * a) % mod;
-        a = (a * a) % mod;
-        b >>= 1;
-    }
-    return ans;
-}
-
-ll binMul(ll a, ll b) {
+vi v;
+ll merge(int s, int e) {
+    int mid = (s + e) >> 1;
+    int l = s, r = mid + 1;
     ll ans = 0;
-    while (b) {
-        if (b & 1) ans = (ans + a) % mod;
-        a = (a + a) % mod;
-        // a = (a << 1) % mod;
-        b >>= 1;
+    vi temp;
+    while (l <= mid && r <= e) {
+        if (v[l] < v[r]) temp.pb(v[l++]);
+        else ans += (mid - l + 1), temp.pb(v[r++]);
     }
+    while (l <= mid) temp.pb(v[l++]);
+    while (r <= e) temp.pb(v[r++]);
+    int j = 0;
+    for (int i = s; i <= e; ++i)
+        v[i] = temp[j++];
     return ans;
 }
-
-ll binExMul(ll a, ll b) {
-    ll ans = 1;
-    while (b) {
-        if (b & 1) ans = binMul(ans, a);
-        a = binMul(a, a);
-        b >>= 1;
-    }
-    return ans;
+ll invCnt(int s, int e) {
+    if (s == e) return 0;
+    int mid = (s + e) >> 1;
+    ll c1 = invCnt(s, mid);
+    ll c2 = invCnt(mid + 1, e);
+    ll c3 = merge(s, e);
+    return c1 + c2 + c3;
 }
-
 void solve()
 {
-    ll a, b;
-    cin >> a >> b;
-    cout << binExpo(a, b); nn
-    cout << binExMul(a, b);
-    // cout<<pow(a,b); nn
+    int n;
+    cin >> n;
+    v.resize(n);
+    fl(i, n) cin >> v[i];
+    cout << invCnt(0, n);
 }
 // Main
 int main()
@@ -137,7 +116,7 @@ int main()
 #endif
     clock_t z = clock();
     // ll t; cin >> t;
-    // while (t--) solve();
+    // while(t--) solve();
     solve();
     // fl(i,t) //Kickstart
     // {

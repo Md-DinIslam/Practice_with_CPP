@@ -40,15 +40,15 @@ typedef map<ll, ll> mpll;
 #define rall(v) v.end(), v.begin()
 
 //DEBUG
-void __print(int x) {cerr << x << " ";}
-void __print(long x) {cerr << x << " ";}
-void __print(long long x) {cerr << x << " ";}
-void __print(unsigned x) {cerr << x << " ";}
-void __print(unsigned long x) {cerr << x << " ";}
-void __print(unsigned long long x) {cerr << x << " ";}
-void __print(float x) {cerr << x << " ";}
-void __print(double x) {cerr << x << " ";}
-void __print(long double x) {cerr << x << " ";}
+void __print(int x) {cerr << x;}
+void __print(long x) {cerr << x;}
+void __print(long long x) {cerr << x;}
+void __print(unsigned x) {cerr << x;}
+void __print(unsigned long x) {cerr << x;}
+void __print(unsigned long long x) {cerr << x;}
+void __print(float x) {cerr << x;}
+void __print(double x) {cerr << x;}
+void __print(long double x) {cerr << x;}
 void __print(char x) {cerr << '\'' << x << '\'';}
 void __print(const char *x) {cerr << '\"' << x << '\"';}
 void __print(const string &x) {cerr << '\"' << x << '\"';}
@@ -72,59 +72,78 @@ const lld PI = 3.141592653589793238;
 const ll INF = 1e18 + 9;
 const ll mod = 1e9 + 7;
 
-// int binExpoRecur(int a, int p) {
-//     if (p == 0) return 1;
-//     int result = binExpoRecur(a, p / 2);
-//     /* ODD Check */
-//     if (p & 1) return (a * (result * 1LL * result) % mod) % mod;
-//     /* Otherwise EVEN */
-//     else return (result * 1LL * result) % mod;
-// }
-
-ll binExRecu(ll a, ll b) {
-    if (!b) return 1;
-    ll ans = binExRecu(a, b / 2);
-    if (b & 1) return (a * (ans * ans) % mod) % mod;
-    else return (ans * ans) % mod;
-}
-ll binExpo(ll a, ll b) {
-    ll ans = 1;
-    while (b) {
-        if (b & 1) ans = (ans * a) % mod;
-        a = (a * a) % mod;
-        b >>= 1;
+// Lazy Propagation
+const int mxN = 2e5;
+ll v[mxN + 1], ans[4 * mxN], lazy[4 * mxN];
+void build(int s, int e, int rt = 1) {
+    if (s == e) ans[rt] = v[s];
+    else {
+        int mid = (s + e) >> 1;
+        build(s, mid, 2 * rt);
+        build(mid + 1, e, 2 * rt + 1);
+        ans[rt] = ans[2 * rt] + ans[2 * rt + 1];
     }
-    return ans;
 }
-
-ll binMul(ll a, ll b) {
-    ll ans = 0;
-    while (b) {
-        if (b & 1) ans = (ans + a) % mod;
-        a = (a + a) % mod;
-        // a = (a << 1) % mod;
-        b >>= 1;
+ll query(int s, int e, int l, int r, int rt = 1) {
+    if (lazy[rt]) {
+        ans[rt] += lazy[rt] * (e - s + 1);
+        if (s != e) {
+            lazy[2 * rt] += lazy[rt], lazy[2 * rt + 1] += lazy[rt];
+        }
+        lazy[rt] = 0;
     }
-    return ans;
+    if (s > r || e < l) return 0ll;
+    if (s >= l && e <= r) return ans[rt];
+    int mid = (s + e) >> 1;
+    ll a = query(s, mid, l, r, 2 * rt);
+    ll b = query(mid + 1, e, l, r, 2 * rt + 1);
+    return a + b;
+    // return query(s,mid,l,r,2*rt) + query(mid+1,e,l,r,2*rt+1);
 }
-
-ll binExMul(ll a, ll b) {
-    ll ans = 1;
-    while (b) {
-        if (b & 1) ans = binMul(ans, a);
-        a = binMul(a, a);
-        b >>= 1;
+void update(int s, int e, int l, int r, ll val, int rt = 1) {
+    if (lazy[rt]) {
+        ans[rt] += lazy[rt] * (e - s + 1);
+        if (s != e) {
+            lazy[2 * rt] += lazy[rt], lazy[2 * rt + 1] += lazy[rt];
+        }
+        lazy[rt] = 0;
     }
-    return ans;
+    if (s > r || e < l) return;
+    if (s >= l && e <= r) {
+        ans[rt] += val * (e - s + 1);
+        if (s != e) {
+            lazy[2 * rt] += val, lazy[2 * rt + 1] += val;
+        }
+    }
+    else {
+        int mid = (s + e) >> 1;
+        update(s, mid, l, r, val, 2 * rt);
+        update(mid + 1, e, l, r, val, 2 * rt + 1);
+        ans[rt] = ans[2 * rt] + ans[2 * rt + 1];
+    }
 }
-
 void solve()
 {
-    ll a, b;
-    cin >> a >> b;
-    cout << binExpo(a, b); nn
-    cout << binExMul(a, b);
-    // cout<<pow(a,b); nn
+    int n, q;
+    cin >> n >> q;
+    for (int i = 1; i <= n; ++i) {
+        cin >> v[i];
+    }
+    build(1, n);
+    while (q--) {
+        int k;
+        cin >> k;
+        if (k == 1) {
+            ll l, r, val;
+            cin >> l >> r >> val;
+            update(1, n, l, r, val);
+        }
+        else {
+            int l;
+            cin>>l;
+            cout << query(1, n, l, l); nn
+        }
+    }
 }
 // Main
 int main()
@@ -137,7 +156,7 @@ int main()
 #endif
     clock_t z = clock();
     // ll t; cin >> t;
-    // while (t--) solve();
+    // while(t--) solve();
     solve();
     // fl(i,t) //Kickstart
     // {
