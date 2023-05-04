@@ -73,52 +73,55 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 const lld PI = 3.141592653589793238;
 const ll INF = 1e18 + 9;
 const ll mod = 1e9 + 7;
-const ll mxN = 10;
-
-int n;
+const int mxN = 1e5 + 10;
 ll bit[mxN];
 void update(int i, int val) {
-    // while (i <= n) {
+    // Using for loop......
+    // for(; i < mxN; i += (i&-i)){
     //     bit[i] += val;
-    //     i += (i & (-i));
     // }
-    for (; i <= n; i += (i & (-i))) bit[i] += val;
+    while (i < mxN) {
+        bit[i] += val;
+        i += (i & (-i));
+    }
 }
 ll sum(int i) {
     ll ans = 0;
-    // while (i) {
+    // Using for loop.....
+    // for (; i; i -= (i & -i)) {
     //     ans += bit[i];
-    //     i -= (i & (-i));
     // }
-    for (; i; i -= (i & (-i))) ans += bit[i];
+    while (i) {
+        ans += bit[i];
+        i -= (i & (-i));
+    }
     return ans;
-}
-ll sum(int l, int r) {
-    return sum(r) - sum(l - 1);
 }
 void solve()
 {
-    int q;
+    int n, q;
     cin >> n >> q;
-    vll v(n);
-    fl(i, n) cin >> v[i];
-    fl(i, n) update(i + 1, v[i]);
-    // cout<<sum(1,4); nn
-    // update(2,10);
-    // cout<<sum(1,4); nn
-    // __print(bit);
+    vll v(n + 1);
+    rep(i, 1, n) {
+        cin >> v[i];
+        update(i, v[i]);
+    }
     while (q--) {
         int tp;
         cin >> tp;
         if (tp == 1) {
             int indx, val;
             cin >> indx >> val;
-            update(indx, val);
+            // Replace i-th value with X....
+            update(indx, val - v[indx]);
+            v[indx] = val;
+            // Add i-th value with X....
+            // update(indx, v[indx]);
         }
         else {
             int l, r;
             cin >> l >> r;
-            cout << sum(l, r); nn
+            cout << sum(r) - sum(l - 1), nn
         }
     }
 }
