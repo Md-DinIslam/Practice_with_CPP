@@ -1,3 +1,5 @@
+<snippet>
+	<content><![CDATA[
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -76,7 +78,7 @@ const ll mod = 1e9 + 7;
 
 void solve()
 {
-    
+    $1
 }
 // Main
 int main()
@@ -89,7 +91,7 @@ int main()
 #endif 
     clock_t z = clock();
     ll t = 1;
-    cin >> t; 
+    cin >> t; $2
     while(t--) solve();
     // fl(i,t) //Kickstart
     // {
@@ -98,4 +100,9 @@ int main()
     // }
     cerr<<"\nRun Time : "<<(((double)(clock() - z)) / CLOCKS_PER_SEC);
     return 0;
-}
+}]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>CP template</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
