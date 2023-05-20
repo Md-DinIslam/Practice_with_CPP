@@ -1,0 +1,1 @@
+{"platforms": ["*"], "description": "C/C++/C#/Java code formatter/beautifier with AStyle.", "version": "3.1.2", "dependencies": [], "url": "http://timonwong.github.io/SublimeAStyleFormatter/", "sublime_text": "*"}
