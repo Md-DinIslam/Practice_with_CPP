@@ -1,5 +1,8 @@
 <snippet>
 	<content><![CDATA[
+/* GREEN UNIVERSITY OF BANGLADESH
+       Md DinIslam, Batch-221
+*/
 #include <bits/stdc++.h>
 using namespace std;
 void solve(){
@@ -14,12 +17,12 @@ int main()
     freopen("output.txt", "w", stdout);
     freopen("Error.txt", "w", stderr);
 #endif
-    long long t;
-    cin >> t;
-    while(t--){
-        solve();
-    }
-    //solve(); $2
+    int t = 1;
+    // cin >> t;
+    while(t--) solve();
+    // fl(i, t) { //Kickstart
+    //     cout << "Case #" << i + 1 << ": "; solve();
+    // }
     return 0;
 }
 ]]></content>
