@@ -1,7 +1,7 @@
 <snippet>
 	<content><![CDATA[
 /* GREEN UNIVERSITY OF BANGLADESH
-            Md DinIslam
+       Md DinIslam, Batch-221
 */
 #include <bits/stdc++.h>
 // #include <ext/pb_ds/assoc_container.hpp>
@@ -88,13 +88,11 @@ const lld PI = 3.141592653589793238;
 const ll INF = 1e18+9;
 const ll mod = 1e9 + 7;
 
-void solve()
-{
+void solve(){
     $1
 }
 // Main
-int main()
-{
+int main(){
     Code By Din
 #ifndef ONLINE_JUDGE
     freopen("input.txt", "r", stdin);
@@ -103,11 +101,10 @@ int main()
 #endif 
     clock_t z = clock();
     ll t = 1;
-    cin >> t; $2
+    // cin >> t; $2
     while(t--) solve();
     // fl(i, t) { //Kickstart
-    //     cout << "Case #" << i + 1 << ": ";
-    //     solve();
+    //     cout << "Case #" << i + 1 << ": "; solve();
     // }
     cerr<<"\nRun Time : "<<(((double)(clock() - z)) / CLOCKS_PER_SEC);
     return 0;
